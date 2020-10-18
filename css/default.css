@@ -10,5 +10,5 @@ fieldset { border: none; }
 .resize-animation-stopper * { animation: none !important; transition: none !important; }
 
 /* hiding elements (a11y) */
-.a11y-hidden-one { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
-.a11y-hidden-two { overflow: hidden; position: absolute; clip: rect(0,0,0,0); width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; }
+.a11y-hidden { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
+.a11y-hidden-02 { overflow: hidden; position: absolute; clip: rect(0,0,0,0); width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; }
