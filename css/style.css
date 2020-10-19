@@ -19,3 +19,9 @@
 ======================= */
 /* body */
 body { font-family: Helvetica; }
+
+/* header */
+.header { border: 2px solid red; }
+
+/* main */
+.main { border: 2px solid blue; }
