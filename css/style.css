@@ -7,7 +7,16 @@
 /* ====================
 [variables]
 ======================= */
-
+:root {
+    --main: rgba(255, 255, 255, 0.7);
+    --contrast: rgba(0, 0, 0, 0.7);
+    --white: rgba(255, 255, 255);
+    --black: rgba(0, 0, 0);
+    --darkgrey: rgba(55, 55, 55, 0.7);
+    --grey: rgba(125, 125, 125, 0.7);
+    --lightgrey: rgba(200, 200, 200, 0.7);
+    --blue: rgba(0, 167, 250, 0.7);
+}
 
 /* ====================
 [modules]
@@ -18,10 +27,43 @@
 [layouts & styles]
 ======================= */
 /* body */
-body { font-family: Helvetica; }
+.body { font-family: helvetica; }
+.app-container { 
+    display: grid;
+    grid-template-columns: minmax(2em, 1fr) minmax(300px, 600px) minmax(2em, 1fr);
+    grid-template-rows: 1em auto auto auto auto 1em;
+    grid-template-areas: 
+        ". . ."
+        "header header header"
+        ". chatbox ."
+        ". chat-form ."
+        ". username-form ."
+        ". . ."
+    ;
+}
 
 /* header */
-.header { border: 2px solid red; }
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: minmax(2em, 1fr) minmax(300px, 600px) minmax(2em, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        ". title ."
+        ". chatroom ."
+    ;
+    text-align: center;
+    background-color: var(--contrast);
+    color: var(--main);
+}
+.app-title { border: 2px solid red; grid-area: title; }
+.chatroom-container { border: 2px solid blue; grid-area: chatroom; }
 
-/* main */
-.main { border: 2px solid blue; }
+/* chatbox (main) */
+.chatbox-container { border: 2px solid green; grid-area: chatbox; text-align: center; }
+
+/* chat-form */
+.chat-form { border: 2px solid crimson; grid-area: chat-form; text-align: center; }
+
+/* username-form */
+.username-form { border: 2px solid lime; grid-area: username-form; text-align: center; }
