@@ -26,16 +26,16 @@
     <div class="app-container">
         <!-- header -->
         <header class="header">
-            <h1 class="app-title">Chat App</h1>
+            <h1 class="app-title">Chatt App</h1>
 
             <!-- chatroom -->
             <div class="chatroom-container">
-                <h3 class="chatroom-label">Choose a room:</h3>
+                <h3 class="chatroom-label a11y-hidden">Choose a room</h3>
                 <div class="chatroom-btn-container">
-                    <button type="submit" id="general">#general</button>
-                    <button type="submit" id="gaming">#gaming</button>
-                    <button type="submit" id="music">#music</button>
-                    <button type="submit" id="sports">#sports</button>
+                    <button class="chatroom-btn" id="general">#general</button>
+                    <button class="chatroom-btn" id="gaming">#gaming</button>
+                    <button class="chatroom-btn" id="music">#music</button>
+                    <button class="chatroom-btn" id="sports">#sports</button>
                 </div>
             </div>
         </header>
@@ -44,7 +44,7 @@
         <!-- main -->
         <main class="chatbox-container">
             <!-- chatbox -->
-            <h3 class="chatbox-label a11y-hidden-one">Chats are displayed below:</h3>
+            <h3 class="chatbox-label a11y-hidden">Chats will be displayed here</h3>
             <ul class="chat-group">
             </ul>
         </main>
@@ -63,7 +63,6 @@
                 placeholder="Type username here..">
             <button type="submit" class="username-btn">Update</button>
         </form>
-
     </div>
     <!-- js links -->
     <script type="module" src="./js/app.js"></script>
