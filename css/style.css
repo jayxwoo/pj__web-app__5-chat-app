@@ -27,9 +27,23 @@
 [layouts & styles]
 ======================= */
 /* body & app-container */
-.body { font-family: helvetica; background-color: var(--lightgrey); width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-.app-container { border: 2px solid red; width: 100%; min-width: 300px; max-width: 400px; border-radius: 30px; overflow: hidden; }
+.body { border: 2px solid red; font-family: helvetica; background-color: var(--lightgrey); padding: 20px; display: flex; justify-content: center; align-items: center; }
+.app-container { border: 2px solid blue; width: 100%; min-width: 300px; max-width: 400px; border-radius: 30px; }
 
 /* header */
 .header { background-color: var(--contrast); color: var(--main); text-align: center; padding: 2rem; }
 .app-title { margin-bottom: 2rem; }
+.chatroom-btn { margin: 5px; }
+
+/* chatbox */
+.chatbox-container { padding: 1rem; }
+.chat-list-item { margin: 10px; line-height: 1.1; }
+.chat-username { border: 1px solid var(--contrast); background-color: var(--main); color: var(--contrast); padding: 7px; border-radius: 7px; display: inline-block; margin-right: 5px; margin-bottom: 5px; }
+.chat-text { background-color: var(--contrast); color: var(--main); padding: 7px; border-radius: 7px; display: inline-block; }
+
+/* chat form */
+.chat-form { border: 2px solid red; display: flex; }
+.chat-input { width: 100%; }
+
+
+/* username form */

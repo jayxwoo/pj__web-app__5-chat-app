@@ -1,14 +1,19 @@
-/* default */
+/* ========== default ========== */
+/* html { box-sizing: border-box } -> Box size includes margin, border, padding, and element. */
+/* html { font-size: 16px } -> Set root font size. */
 html { box-sizing: border-box; font-size: 16px; }
+
+/* body { min-height: 100vh } -> Set minimum height of body to 100% viewport height. It also fixes a bug of the top part getting cropped in mobile view. */
+
 body { min-height: 100vh; scroll-behavior: smooth; text-rendering: optimizeSpeed; line-height: 1; }
 *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
 img { max-width: 100%; height: auto; display: block; }
-ul, ol { list-style: none; }
+ul[class], ol[class] { list-style: none; }
 fieldset { border: none; }
 
-/* stop all animations and transitions during resizing */
+/* stop all animations and transitions on resizing */
 .resize-animation-stopper * { animation: none !important; transition: none !important; }
 
-/* hiding elements (a11y) */
+/* hide elements for accessibility (a11y) */
 .a11y-hidden { clip: rect(0 0 0 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
 .a11y-hidden-02 { overflow: hidden; position: absolute; clip: rect(0,0,0,0); width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; }
