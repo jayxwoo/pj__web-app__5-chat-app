@@ -3,12 +3,25 @@
 /* html { font-size: 16px } -> Set root font size. */
 html { box-sizing: border-box; font-size: 16px; }
 
-/* body { min-height: 100vh } -> Set minimum height of body to 100% viewport height. It also fixes a bug of the top part getting cropped in mobile view. */
-
+/* body { min-height: 100vh } -> Set minimum height of body to 100% viewport height. It also fixes a bug where the top part getting cropped with small screen sizes. */
+/* body { scroll-behavior: smooth; } -> For smooth scrolling animation when jungming to a different element on the same page. */
+/* body { text-rendering: optimizeSpeed } ->  Emphasize rendering speed over legibility and geometric precision. */
+/* body { line-height: 1 } -> Set text line-height to 1. */
 body { min-height: 100vh; scroll-behavior: smooth; text-rendering: optimizeSpeed; line-height: 1; }
+
+/* *, *::before, *::after { box-sizing: inherit; } -> Inherits box-sizing value from html. */
+/* *, *::before, *::after { margin: 0; padding: 0; } -> Set margin and padding to zero to all elements. */
 *, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
+
+/* img { max-width: 100%; } -> An image will scale down if it has to, but never scale up to be larger than its original size. */
+/* img { height: auto; } -> Keeps an image responsive. */
+/* img { display: block; } -> Removes a white space below an image. */
 img { max-width: 100%; height: auto; display: block; }
+
+/* Removes default list styles on <ul> and <ol> with classes. */
 ul[class], ol[class] { list-style: none; }
+
+/* Removes a border line around fieldset element. */
 fieldset { border: none; }
 
 /* stop all animations and transitions on resizing */
