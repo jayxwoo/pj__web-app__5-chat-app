@@ -28,14 +28,24 @@
         <header class="header">
             <h1 class="app-title">Chat App</h1>
 
-            <!-- chatroom -->
-            <div class="chatroom-container">
-                <h3 class="chatroom-label a11y-hidden">Choose a room</h3>
-                <div class="chatroom-btn-container">
-                    <button class="chatroom-btn" id="general">#general</button>
-                    <button class="chatroom-btn" id="gaming">#gaming</button>
-                    <button class="chatroom-btn" id="music">#music</button>
-                    <button class="chatroom-btn" id="sports">#sports</button>
+            <div class="chatroom-username-container">
+                <!-- username form -->
+                <form action="" class="username-form">
+                    <label for="" class="username-label a11y-hidden">Update username</label>
+                    <input type="text" name="username" id="usernameInput" class="username-input"
+                        placeholder="Type username here..">
+                    <button type="submit" class="username-btn">Update</button>
+                </form>
+
+                <!-- chatroom -->
+                <div class="chatroom-container">
+                    <h3 class="chatroom-label a11y-hidden">Choose a room</h3>
+                    <div class="chatroom-btn-container">
+                        <button class="chatroom-btn" id="general">#general</button>
+                        <button class="chatroom-btn" id="gaming">#gaming</button>
+                        <button class="chatroom-btn" id="music">#music</button>
+                        <button class="chatroom-btn" id="sports">#sports</button>
+                    </div>
                 </div>
             </div>
         </header>
@@ -45,9 +55,12 @@
             <!-- chatbox -->
             <h3 class="chatbox-label a11y-hidden">Chats will be displayed here</h3>
             <ul class="chat-list-group">
-                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you doing? I was looking for you yesterday :))</span></li>
-                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you doing? I was looking for you yesterday :))</span></li>
-                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you doing? :))</span></li>
+                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you
+                        doing? I was looking for you yesterday :))</span></li>
+                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you
+                        doing? I was looking for you yesterday :))</span></li>
+                <li class="chat-list-item"><span class="chat-username">JM</span><span class="chat-text">Hi, how are you
+                        doing? :))</span></li>
             </ul>
         </main>
 
@@ -56,14 +69,6 @@
             <label for="chat-label" class="a11y-hidden">Enter message</label>
             <input type="text" name="chat" id="chatInput" class="chat-input" placeholder="Type message here..">
             <button type="submit" class="chat-btn">Send</button>
-        </form>
-
-        <!-- username form -->
-        <form action="" class="username-form">
-            <label for="" class="username-label a11y-hidden">Update username</label>
-            <input type="text" name="username" id="usernameInput" class="username-input"
-                placeholder="Type username here..">
-            <button type="submit" class="username-btn">Update</button>
         </form>
     </div>
     <!-- js links -->
