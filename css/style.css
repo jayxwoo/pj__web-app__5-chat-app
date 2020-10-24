@@ -16,6 +16,7 @@
     --grey: rgba(125, 125, 125, 0.7);
     --lightgrey: rgba(200, 200, 200, 0.7);
     --blue: rgba(0, 167, 250, 0.7);
+    --darkblue: rgba(0, 100, 181, 0.8);
 }
 
 /* ====================
@@ -26,20 +27,26 @@
 [layouts & styles]
 ======================= */
 /* body & app-container */
-.body { font-family: helvetica; min-width: 240px; background-color: var(--lightgrey); display: flex; justify-content: center; align-items: center; padding: 20px; }
+.body { font-family: helvetica; min-width: 240px; background-color: var(--main); display: flex; justify-content: center; align-items: center; padding: 20px; }
 .app-container { border: 2px solid var(--contrast); width: 100%; min-width: 200px; max-width: 600px; border-radius: 30px; overflow: hidden; }
 
 /* header */
 .header { background-color: var(--contrast); color: var(--main); text-align: center; padding: 2rem; }
-.app-title { margin-bottom: 1.5rem; }
-/* header > chatroom & chatroom */
-.username-form { display: flex; margin-bottom: 1rem; }
+.app-title { margin-bottom: 2rem; }
+/* header > username-form & chatroom */
+.username-chatroom-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.username-form { width: 80%; display: flex; margin-bottom: 2rem; }
 .username-input { width: 100%; outline: none; border: none; border-radius: 7px; padding: 7px; font-size: 0.9rem; color: var(--blue); font-weight: bold; }
 .username-input::placeholder { font-weight: lighter; }
-.username-btn { margin-left: 5px; outline: none; border: none; border-radius: 7px; padding: 7px; background-color: var(--blue); color: var(--white); }
+.username-btn { margin-left: 5px; outline: none; border: none; border-radius: 7px; padding: 7px; background-color: var(--blue); color: var(--white); cursor: pointer; }
+.username-btn:hover { background-color: var(--darkblue); }
+.username-btn:active { transform: translate(1px, 1px); }
 
+.chatroom-container { width: 80%; }
 .chatroom-btn-container { display: flex; justify-content: space-between; }
-.chatroom-btn { outline: none; border: none; background-color: var(--main); color: var(--contrast); padding: 10px; border-radius: 7px; cursor: pointer; font-weight: bolder; }
+.chatroom-btn { outline: none; border: 1px solid var(--main); background-color: transparent; color: var(--main); padding: 10px; border-radius: 7px; cursor: pointer; font-weight: bolder; }
+.chatroom-btn:hover { background-color: var(--main); color: var(--contrast); }
+.chatroom-btn:active { transform: translate(1px, 1px); }
 
 /* chatbox */
 .chatbox-container { padding: 2rem; }
@@ -48,7 +55,41 @@
 .chat-username { border: 1px solid var(--contrast); background-color: var(--main); color: var(--contrast); padding: 7px; border-radius: 7px; display: inline-block; margin-right: 5px; margin-bottom: 5px; }
 .chat-text { background-color: var(--contrast); color: var(--main); padding: 7px; border-radius: 7px; display: inline-block; }
 
-/* chat form */
-.chat-form { display: flex; padding: 1.5rem 2rem; border: 1px dotted var(--contrast); }
-.chat-input { width: 100%; outline: none; border: none; border-radius: 7px; padding: 10px; font-size: 1.1rem; }
-.chat-btn { margin-left: 5px; outline: none; border: none; border-radius: 7px; padding: 10px; background-color: var(--blue); color: var(--white); }
+/* chat-form */
+.chat-form { display: flex; padding: 1.5rem 2rem; border-top: 1px dotted var(--contrast); }
+.chat-input { width: 100%; outline: none; border: none; border-radius: 7px; padding: 10px; font-size: 1.1rem; color: var(--blue); font-weight: bold; }
+.chat-input::placeholder { font-weight: lighter; }
+.chat-btn { margin-left: 5px; outline: none; border: none; border-radius: 7px; padding: 10px 15px; background-color: var(--blue); color: var(--white); cursor: pointer; }
+.chat-btn:hover { background-color: var(--darkblue); }
+.chat-btn:active { transform: translate(1px, 1px); }
+
+@media only screen and ( min-width: 800px ) {
+    /* body & app-container */
+    .body { all: unset; font-family: helvetica; }
+    .app-container { 
+        all: unset;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 90% 10%;
+        grid-template-areas: 
+            "header chatbox"
+            "header chat-form"
+        ;
+    }
+
+    /* header */
+    .header { grid-area: header; }
+    .app-title {  }
+    .username-form {  }
+    .chatroom-container {  }
+    .chatroom-btn-container { flex-direction: column; }
+    .chatroom-btn:not(:last-of-type) { margin-bottom: 20px; }
+
+    /* chatbox */
+    .chatbox-container { grid-area: chatbox; }
+
+    /* chat-form */
+    .chat-form { grid-area: chat-form; }
+}
