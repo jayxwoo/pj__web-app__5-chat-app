@@ -15,17 +15,11 @@ class ChatGetter {
     }
 
     get = async function () {
-        // get collection
-        const col = await firebase.firestore().collection(this.col).get();
-        console.log(col);
-
-        // get document
-        const docs = col.docs;
-        console.log(docs);
-
-        // get properties
-        docs.forEach(doc => { 
-            console.log(doc.data());
+        // a real-time listener; onSnapshot
+        firebase.firestore().collection(this.col).orderBy('created_at').onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(docChange => {
+                console.log(docChange.doc.data());
+            });
         });
     }
 }
