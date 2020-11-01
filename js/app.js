@@ -24,6 +24,21 @@ class ChatGetter {
     }
 }
 
+// create chats
+class ChatCreator {
+    constructor(chatForm) {
+        this.chatInput = chatForm.chat.value.trim();
+        this.created_at = new Date();
+        this.username = 'JM'; // update later
+        this.chatroom = 'general'; // update later
+    }
+
+    create = function () {
+        console.log(this.chatInput, this.created_at);
+    }
+}
+
+
 // add chats
 class ChatAdder {
     constructor(col) {
@@ -42,9 +57,11 @@ const main = function () {
     chatForm.addEventListener('submit', e => {
         e.preventDefault();
 
-        // get input value
-        const chatInput = chatForm.chat.value.trim();
-        console.log(chatInput);
+        // create
+        const chatCreator = new ChatCreator(chatForm);
+        chatCreator.create();
+
+        // add
 
         chatForm.reset();
     });
