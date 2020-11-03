@@ -3,6 +3,7 @@ import './default.js';
 
 // ========== DOM references ==========
 const chatForm = document.querySelector('.chat-form');
+const usernameForm = document.querySelector('.username-form');
 
 // ========== global variables ==========
 const col = 'chats';
@@ -28,7 +29,9 @@ class Chatter {
     }
 
     // create chats
-    createChats = function (message, created_at) {
+    createChats = function (message) {
+        const created_at = new Date();
+
         const newChats = {
             message : message,
             created_at : created_at,
@@ -39,19 +42,25 @@ class Chatter {
         return newChats;
     }
 
-    // // add chats
-    // addChats = function (newChats) {
-    //     firebase.firestore().collection(this.col).add(newChats).then(() => {
-    //         console.log('A new chat has been added!');
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     });
-    // }
+    // add chats
+    addChats = function (newChats) {
+        firebase.firestore().collection(this.col).add(newChats).then(() => {
+            console.log('A new chat has been added!');
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    // update username
+    updateUsername = function (newUsername) {
+        this.username = newUsername;
+        console.log(`Username is updated to '${this.username}'`);
+    }
 }
 
 // main
 const main = function () {
-    const chatter = new Chatter(col, chatForm, 'JM', 'general');
+    const chatter = new Chatter(col, 'JM', 'general');
     
     // get chats
     chatter.getChats();
@@ -62,14 +71,24 @@ const main = function () {
 
         // create chats
         const message = chatForm.chat.value.trim();
-        const created_at = firebase.firestore.Timestamp.fromDate(new Date());
-        const newChats = chatter.createChats(message, created_at);
+        const newChats = chatter.createChats(message);
 
         // add chats
-        firebase.firestore().collection(col).add(newChats);
+        chatter.addChats(newChats);
 
         // reset form
         chatForm.reset();
+    });
+
+    // update username
+    usernameForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        // get username
+        const newUsername = usernameForm.username.value.trim();
+        
+        // update username
+        chatter.updateUsername(newUsername);
     });
 };
 main();
