@@ -8,13 +8,17 @@ const chatForm = document.querySelector('.chat-form');
 const col = 'chats';
 
 // ========== script ==========
-// get chats
-class ChatGetter {
-    constructor(col) {
+
+// Chatter
+class Chatter {
+    constructor(col, username, chatroom) {
         this.col = col;
+        this.username = username;
+        this.chatroom = chatroom;
     }
 
-    get = async function () {
+    // get chats
+    getChats = async function () {
         // a real-time listener; onSnapshot
         firebase.firestore().collection(this.col).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
@@ -22,47 +26,37 @@ class ChatGetter {
             });
         });
     }
-}
 
-// create chats
-class ChatCreator {
-    constructor(chatForm) {
-        this.chatInput = chatForm.chat.value.trim();
-        this.created_at = new Date();
-        this.username = 'JM'; // update later
-        this.chatroom = 'general'; // update later
-    }
+    // create chats
+    createChats = function (message, created_at) {
+        const newChats = {
+            message : message,
+            created_at : created_at,
+            username : this.username,
+            chatroom : this.chatroom
+        };
 
-    create = function () {
-        console.log(this.chatInput, this.created_at);
+        console.log(newChats);
     }
 }
-
-
-// add chats
-class ChatAdder {
-    constructor(col) {
-        this.col = col;
-    }
-}
-
 
 // main
 const main = function () {
+    const chatter = new Chatter(col, chatForm, 'JM', 'general');
+    
     // get chats
-    const chatGetter = new ChatGetter(col);
-    chatGetter.get();
+    chatter.getChats();
 
-    // add chats
+    // create & add chats
     chatForm.addEventListener('submit', e => {
         e.preventDefault();
 
         // create
-        const chatCreator = new ChatCreator(chatForm);
-        chatCreator.create();
+        const message = chatForm.chat.value.trim();
+        const created_at = new Date();
+        chatter.createChats(message, created_at);
 
-        // add
-
+        // reset form
         chatForm.reset();
     });
 };
