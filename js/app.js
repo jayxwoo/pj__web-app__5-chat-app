@@ -36,8 +36,17 @@ class Chatter {
             chatroom : this.chatroom
         };
 
-        console.log(newChats);
+        return newChats;
     }
+
+    // // add chats
+    // addChats = function (newChats) {
+    //     firebase.firestore().collection(this.col).add(newChats).then(() => {
+    //         console.log('A new chat has been added!');
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     });
+    // }
 }
 
 // main
@@ -51,10 +60,13 @@ const main = function () {
     chatForm.addEventListener('submit', e => {
         e.preventDefault();
 
-        // create
+        // create chats
         const message = chatForm.chat.value.trim();
-        const created_at = new Date();
-        chatter.createChats(message, created_at);
+        const created_at = firebase.firestore.Timestamp.fromDate(new Date());
+        const newChats = chatter.createChats(message, created_at);
+
+        // add chats
+        firebase.firestore().collection(col).add(newChats);
 
         // reset form
         chatForm.reset();
