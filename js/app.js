@@ -4,6 +4,7 @@ import './default.js';
 // ========== DOM references ==========
 const chatForm = document.querySelector('.chat-form');
 const usernameForm = document.querySelector('.username-form');
+const chatroomBtnContainer = document.querySelector('.chatroom-btn-container');
 
 // ========== global variables ==========
 const col = 'chats';
@@ -21,7 +22,7 @@ class Chatter {
     // get chats
     getChats = async function () {
         // a real-time listener; onSnapshot
-        firebase.firestore().collection(this.col).orderBy('created_at').onSnapshot(snapshot => {
+        firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
                 console.log(docChange.doc.data());
             });
@@ -54,7 +55,13 @@ class Chatter {
     // update username
     updateUsername = function (newUsername) {
         this.username = newUsername;
-        console.log(`Username is updated to '${this.username}'`);
+        console.log(`Username is updated to '${this.username}'!`);
+    }
+
+    // update chatroom
+    updateChatroom = function (newChatroom) {
+        this.chatroom = newChatroom;
+        console.log(`Chatroom is updated to '${this.chatroom}'!`);
     }
 }
 
@@ -89,6 +96,24 @@ const main = function () {
         
         // update username
         chatter.updateUsername(newUsername);
+    });
+
+    // update chatroom
+    chatroomBtnContainer.addEventListener('click', e => {
+        // remove all active indicator
+        Array.from(chatroomBtnContainer.children).forEach(btn => {
+            btn.classList.remove('chatroom-btn--active');
+        });
+
+        // add an indicator to the clicked chatroom
+        e.target.classList.add('chatroom-btn--active');
+
+        // update chatroom
+        const newChatroom = e.target.id;
+        chatter.updateChatroom(newChatroom);
+
+        // get chats
+        chatter.getChats();
     });
 };
 main();
