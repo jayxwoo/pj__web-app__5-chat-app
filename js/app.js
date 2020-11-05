@@ -5,12 +5,12 @@ import './default.js';
 const chatForm = document.querySelector('.chat-form');
 const usernameForm = document.querySelector('.username-form');
 const chatroomBtnContainer = document.querySelector('.chatroom-btn-container');
+const chatListGroup = document.querySelector('.chat-list-group');
 
 // ========== global variables ==========
 const col = 'chats';
 
 // ========== script ==========
-
 // Chatter
 class Chatter {
     constructor(col, username, chatroom) {
@@ -20,11 +20,13 @@ class Chatter {
     }
 
     // get chats
-    getChats = async function () {
+    getChats = async function (callback) {
         // a real-time listener; onSnapshot
         firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
-                console.log(docChange.doc.data());
+                if (docChange.type === 'added') {
+                    callback(docChange.doc.data());
+                };
             });
         });
     }
@@ -65,12 +67,33 @@ class Chatter {
     }
 }
 
+// ChatUI
+class ChatUI {
+    constructor(chatListGroup) {
+        this.chatListGroup = chatListGroup;
+    }
+
+    // render
+    render = function (data) {
+        const html = `
+        <li class="chat-list-item">
+            <span class="chat-username">${data.username}</span>
+            <span class="chat-text">${data.message} <span class="chat-time">${data.created_at.toDate().toLocaleString()}</span></span>
+        </li>`;
+        
+        this.chatListGroup.innerHTML += html;
+    }
+}
+
 // main
 const main = function () {
-    const chatter = new Chatter(col, 'JM', 'general');
+    const chatter = new Chatter(col, 'default', 'general');
+    const chatUI = new ChatUI(chatListGroup, 'default');
     
     // get chats
-    chatter.getChats();
+    chatter.getChats((data) => {
+        chatUI.render(data);
+    });
 
     // create & add chats
     chatForm.addEventListener('submit', e => {
@@ -113,7 +136,9 @@ const main = function () {
         chatter.updateChatroom(newChatroom);
 
         // get chats
-        chatter.getChats();
+        chatter.getChats((data) => {
+            chatUI.render(data);
+        });
     });
 };
 main();
