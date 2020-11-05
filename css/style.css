@@ -55,6 +55,7 @@
 .chat-list-item:last-of-type{ margin-bottom: 0; }
 .chat-username { border: 1px solid var(--contrast); background-color: var(--main); color: var(--contrast); padding: 7px; border-radius: 7px; display: inline-block; margin-right: 5px; margin-bottom: 5px; }
 .chat-text { background-color: var(--contrast); color: var(--main); padding: 7px; border-radius: 7px; display: inline-block; }
+.chat-time { font-size: 0.6rem; }
 
 /* chat-form */
 .chat-form { display: flex; padding: 1rem; border-top: 1px dotted var(--contrast); }
