@@ -17,12 +17,13 @@ class Chatter {
         this.col = col;
         this.username = username;
         this.chatroom = chatroom;
+        this.unsub;
     }
 
     // get chats
     getChats = async function (callback) {
         // a real-time listener; onSnapshot
-        firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
+        this.unsub = firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
                 if (docChange.type === 'added') {
                     callback(docChange.doc.data());
@@ -64,6 +65,7 @@ class Chatter {
     updateChatroom = function (newChatroom) {
         this.chatroom = newChatroom;
         console.log(`Chatroom is updated to '${this.chatroom}'!`);
+        this.unsub();
     }
 }
 
@@ -134,6 +136,9 @@ const main = function () {
         // update chatroom
         const newChatroom = e.target.id;
         chatter.updateChatroom(newChatroom);
+
+        // remove current chat UI
+        chatListGroup.innerHTML = '';
 
         // get chats
         chatter.getChats((data) => {
