@@ -121,6 +121,9 @@ const main = function () {
 
         // update username
         chatter.updateUsername(newUsername);
+
+        // reset username form
+        usernameForm.reset()
     });
 
     // update chatroom
