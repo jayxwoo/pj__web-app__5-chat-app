@@ -80,7 +80,7 @@ class ChatUI {
         const html = `
         <li class="chat-list-item">
             <span class="chat-username">${data.username}</span>
-            <span class="chat-text">${data.message} <span class="chat-time">${data.created_at.toDate().toLocaleString()}</span></span>
+            <span class="chat-text">${data.message} <span class="chat-time">${dateFns.distanceInWordsToNow(data.created_at.toDate(), {addSuffix: true})}</span></span>
         </li>`;
 
         this.chatListGroup.innerHTML += html;
