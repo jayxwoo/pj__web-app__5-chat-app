@@ -25,8 +25,10 @@ class Chatter {
         // a real-time listener; onSnapshot
         this.unsub = firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
+                console.log(docChange.type);
+                console.log(docChange.doc.id);
                 if (docChange.type === 'added') {
-                    callback(docChange.doc.data());
+                    callback(docChange.doc);
                 };
             });
         });
@@ -67,7 +69,7 @@ class Chatter {
         console.log(`Chatroom is updated to '${this.chatroom}'!`);
         this.unsub();
     }
-}
+}   
 
 // ChatUI
 class ChatUI {
@@ -76,11 +78,12 @@ class ChatUI {
     }
 
     // render
-    render = function (data) {
+    render = function (doc) {
+        // render chats
         const html = `
-        <li class="chat-list-item">
-            <span class="chat-username">${data.username}</span>
-            <span class="chat-text">${data.message} <span class="chat-time">${dateFns.distanceInWordsToNow(data.created_at.toDate(), {addSuffix: true})}</span></span>
+        <li class="chat-list-item" id="${doc.id}">
+            <span class="chat-username">${doc.data().username}</span>
+            <span class="chat-text">${doc.data().message} <span class="chat-time">${dateFns.distanceInWordsToNow(doc.data().created_at.toDate(), {addSuffix: true})}</span><i class="fas fa-times-circle chat-delete-btn" role="button" aria-label="delete button"></i></span>
         </li>`;
 
         this.chatListGroup.innerHTML += html;
@@ -93,8 +96,8 @@ const main = function () {
     const chatUI = new ChatUI(chatListGroup, 'default');
 
     // get chats
-    chatter.getChats((data) => {
-        chatUI.render(data);
+    chatter.getChats((doc) => {
+        chatUI.render(doc);
     });
 
     // create & add chats
@@ -148,6 +151,13 @@ const main = function () {
             chatter.getChats((data) => {
                 chatUI.render(data);
             });
+        };
+    });
+
+    // delete chats
+    chatListGroup.addEventListener('click', (e) => {
+        if (e.target.classList.contains('chat-delete-btn')) {
+            console.log(e.target.parentElement.parentElement.getAttribute('id'));
         };
     });
 };
