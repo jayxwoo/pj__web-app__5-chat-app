@@ -37,10 +37,10 @@ class Chatter {
         const created_at = new Date();
 
         const newChats = {
-            message : message,
-            created_at : created_at,
-            username : this.username,
-            chatroom : this.chatroom
+            message: message,
+            created_at: created_at,
+            username: this.username,
+            chatroom: this.chatroom
         };
 
         return newChats;
@@ -82,7 +82,7 @@ class ChatUI {
             <span class="chat-username">${data.username}</span>
             <span class="chat-text">${data.message} <span class="chat-time">${data.created_at.toDate().toLocaleString()}</span></span>
         </li>`;
-        
+
         this.chatListGroup.innerHTML += html;
     }
 }
@@ -91,7 +91,7 @@ class ChatUI {
 const main = function () {
     const chatter = new Chatter(col, 'default', 'general');
     const chatUI = new ChatUI(chatListGroup, 'default');
-    
+
     // get chats
     chatter.getChats((data) => {
         chatUI.render(data);
@@ -118,32 +118,34 @@ const main = function () {
 
         // get username
         const newUsername = usernameForm.username.value.trim();
-        
+
         // update username
         chatter.updateUsername(newUsername);
     });
 
     // update chatroom
     chatroomBtnContainer.addEventListener('click', e => {
-        // remove all active indicator
-        Array.from(chatroomBtnContainer.children).forEach(btn => {
-            btn.classList.remove('chatroom-btn--active');
-        });
+        if (e.target.tagName === "BUTTON") {
+            // remove all active indicator
+            Array.from(chatroomBtnContainer.children).forEach(btn => {
+                btn.classList.remove('chatroom-btn--active');
+            });
 
-        // add an indicator to the clicked chatroom
-        e.target.classList.add('chatroom-btn--active');
+            // add an indicator to the clicked chatroom
+            e.target.classList.add('chatroom-btn--active');
 
-        // update chatroom
-        const newChatroom = e.target.id;
-        chatter.updateChatroom(newChatroom);
+            // update chatroom
+            const newChatroom = e.target.id;
+            chatter.updateChatroom(newChatroom);
 
-        // remove current chat UI
-        chatListGroup.innerHTML = '';
+            // remove current chat UI
+            chatListGroup.innerHTML = '';
 
-        // get chats
-        chatter.getChats((data) => {
-            chatUI.render(data);
-        });
+            // get chats
+            chatter.getChats((data) => {
+                chatUI.render(data);
+            });
+        };
     });
 };
 main();
