@@ -43,8 +43,8 @@
 .username-btn:active { transform: translate(1px, 1px); }
 
 .chatroom-container { width: 80%; }
-.chatroom-btn-container { display: flex; justify-content: space-between; }
-.chatroom-btn { outline: none; border: 1px solid var(--main); background-color: transparent; color: var(--main); padding: 10px; border-radius: 7px; cursor: pointer; font-weight: bolder; position: relative; }
+.chatroom-btn-container { display: flex; justify-content: space-evenly; flex-wrap: wrap; }
+.chatroom-btn { margin-bottom: 5px; outline: none; border: 1px solid var(--main); background-color: transparent; color: var(--main); padding: 10px; border-radius: 7px; cursor: pointer; font-weight: bolder; position: relative; }
 .chatroom-btn:hover { background-color: var(--main); color: var(--contrast); }
 .chatroom-btn:active { transform: translate(1px, 1px); }
 .chatroom-btn--active::after { content: ''; position: absolute; width: 5px; height: 5px; border-radius: 5px; background-color: red; top: 5px; }
