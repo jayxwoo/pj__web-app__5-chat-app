@@ -25,8 +25,6 @@ class Chatter {
         // a real-time listener; onSnapshot
         this.unsub = firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
             snapshot.docChanges().forEach(docChange => {
-                console.log(docChange.type);
-                console.log(docChange.doc.id);
                 if (docChange.type === 'added') {
                     callback(docChange.doc);
                 };
@@ -49,7 +47,7 @@ class Chatter {
     }
 
     // add chats
-    addChats = function (newChats) {
+    addChats = async function (newChats) {
         firebase.firestore().collection(this.col).add(newChats).then(() => {
             console.log('A new chat has been added!');
         }).catch((err) => {
@@ -69,6 +67,15 @@ class Chatter {
         console.log(`Chatroom is updated to '${this.chatroom}'!`);
         this.unsub();
     }
+
+    // delete chats
+    deleteChats = async function (id) {
+        firebase.firestore().collection(this.col).doc(id).delete().then(() => {
+            console.log('Chat is deleted!');
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
 }   
 
 // ChatUI
@@ -77,9 +84,8 @@ class ChatUI {
         this.chatListGroup = chatListGroup;
     }
 
-    // render
-    render = function (doc) {
-        // render chats
+    // render chats
+    renderChats = function (doc) {
         const html = `
         <li class="chat-list-item" id="${doc.id}">
             <span class="chat-username">${doc.data().username}</span>
@@ -87,6 +93,15 @@ class ChatUI {
         </li>`;
 
         this.chatListGroup.innerHTML += html;
+    }
+
+    // deleteChats
+    deleteChats = function (id) {
+        Array.from(this.chatListGroup.children).forEach(chat => {
+            if (chat.getAttribute('id') === id) {
+                chat.remove();
+            };
+        });
     }
 }
 
@@ -97,7 +112,7 @@ const main = function () {
 
     // get chats
     chatter.getChats((doc) => {
-        chatUI.render(doc);
+        chatUI.renderChats(doc);
     });
 
     // create & add chats
@@ -149,7 +164,7 @@ const main = function () {
 
             // get chats
             chatter.getChats((data) => {
-                chatUI.render(data);
+                chatUI.renderChats(data);
             });
         };
     });
@@ -157,7 +172,13 @@ const main = function () {
     // delete chats
     chatListGroup.addEventListener('click', (e) => {
         if (e.target.classList.contains('chat-delete-btn')) {
-            console.log(e.target.parentElement.parentElement.getAttribute('id'));
+            const id = e.target.parentElement.parentElement.getAttribute('id');
+
+            // delete chats from database
+            chatter.deleteChats(id);
+
+            // delete chats from UI
+            chatUI.deleteChats(id);
         };
     });
 };
