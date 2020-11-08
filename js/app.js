@@ -86,6 +86,7 @@ class ChatUI {
 
     // render chats
     renderChats = function (doc) {
+        // render
         const html = `
         <li class="chat-list-item" id="${doc.id}">
             <span class="chat-username">${doc.data().username}</span>
@@ -93,6 +94,9 @@ class ChatUI {
         </li>`;
 
         this.chatListGroup.innerHTML += html;
+
+        // scroll to the last chat
+        this.chatListGroup.lastChild.scrollIntoView();
     }
 
     // deleteChats
@@ -112,6 +116,7 @@ const main = function () {
 
     // get chats
     chatter.getChats((doc) => {
+        // render chats
         chatUI.renderChats(doc);
     });
 
