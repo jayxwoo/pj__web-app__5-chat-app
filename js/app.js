@@ -126,13 +126,19 @@ const main = function () {
 
         // create chats
         const message = chatForm.chat.value.trim();
-        const newChats = chatter.createChats(message);
 
-        // add chats
-        chatter.addChats(newChats);
+        if (message === '') {
+            alert('Please enter your message!');
+        } else {
+            const newChats = chatter.createChats(message);
+    
+            // add chats
+            chatter.addChats(newChats);
+    
+            // reset form
+            chatForm.reset();
+        };
 
-        // reset form
-        chatForm.reset();
     });
 
     // update username
