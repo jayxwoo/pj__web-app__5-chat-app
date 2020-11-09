@@ -60,7 +60,6 @@
 .chat-delete-btn:hover { color: red; }
 .chat-delete-btn:active { color: red; transform: translate(1px, 1px); }
 
-
 /* chat-form */
 .chat-form { display: flex; padding: 1rem; border-top: 1px dotted var(--contrast); }
 .chat-input { width: 100%; outline: none; border: none; border-radius: 7px; padding: 10px; font-size: 1.1rem; color: var(--blue); font-weight: bold; }

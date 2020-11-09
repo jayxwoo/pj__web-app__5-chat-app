@@ -13,7 +13,6 @@ const chatListGroup = document.querySelector('.chat-list-group');
 const col = 'chats';
 
 // ========== script ==========
-
 // main
 const main = function () {
     const localUsername = localStorage.getItem('username');
