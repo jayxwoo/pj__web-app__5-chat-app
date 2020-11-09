@@ -15,11 +15,11 @@ const col = 'chats';
 // ========== script ==========
 // main
 const main = function () {
-    const localUsername = localStorage.getItem('username');
+    let localUsername = localStorage.getItem('username');
 
     if (!localUsername) {
         localUsername = 'anonymous';
-    };
+    }
 
     const chatter = new Chatter(col, localUsername, 'general');
     const chatUI = new ChatUI(chatListGroup, 'default');
