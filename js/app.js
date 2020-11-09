@@ -1,5 +1,7 @@
 // ========== imports ==========
 import './default.js';
+import { Chatter } from './chat.js';
+import { ChatUI } from './ui.js';
 
 // ========== DOM references ==========
 const chatForm = document.querySelector('.chat-form');
@@ -11,103 +13,6 @@ const chatListGroup = document.querySelector('.chat-list-group');
 const col = 'chats';
 
 // ========== script ==========
-// Chatter
-class Chatter {
-    constructor(col, username, chatroom) {
-        this.col = col;
-        this.username = username;
-        this.chatroom = chatroom;
-        this.unsub;
-    }
-
-    // get chats
-    getChats = async function (callback) {
-        // a real-time listener; onSnapshot
-        this.unsub = firebase.firestore().collection(this.col).where('chatroom', '==', this.chatroom).orderBy('created_at').onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(docChange => {
-                if (docChange.type === 'added') {
-                    callback(docChange.doc);
-                };
-            });
-        });
-    }
-
-    // create chats
-    createChats = function (message) {
-        const created_at = new Date();
-
-        const newChats = {
-            message: message,
-            created_at: created_at,
-            username: this.username,
-            chatroom: this.chatroom
-        };
-
-        return newChats;
-    }
-
-    // add chats
-    addChats = async function (newChats) {
-        firebase.firestore().collection(this.col).add(newChats).then(() => {
-            console.log('A new chat has been added!');
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
-
-    // update username
-    updateUsername = function (newUsername) {
-        this.username = newUsername;
-        console.log(`Username is updated to '${this.username}'!`);
-    }
-
-    // update chatroom
-    updateChatroom = function (newChatroom) {
-        this.chatroom = newChatroom;
-        console.log(`Chatroom is updated to '${this.chatroom}'!`);
-        this.unsub();
-    }
-
-    // delete chats
-    deleteChats = async function (id) {
-        firebase.firestore().collection(this.col).doc(id).delete().then(() => {
-            console.log('Chat is deleted!');
-        }).catch((err) => {
-            console.log(err);
-        });
-    }
-}   
-
-// ChatUI
-class ChatUI {
-    constructor(chatListGroup) {
-        this.chatListGroup = chatListGroup;
-    }
-
-    // render chats
-    renderChats = function (doc) {
-        // render
-        const html = `
-        <li class="chat-list-item" id="${doc.id}">
-            <span class="chat-username">${doc.data().username}</span>
-            <span class="chat-text">${doc.data().message} <span class="chat-time">${dateFns.distanceInWordsToNow(doc.data().created_at.toDate(), {addSuffix: true})}</span><i class="fas fa-times-circle chat-delete-btn" role="button" aria-label="delete button"></i></span>
-        </li>`;
-
-        this.chatListGroup.innerHTML += html;
-
-        // scroll to the last chat
-        this.chatListGroup.lastChild.scrollIntoView();
-    }
-
-    // deleteChats
-    deleteChats = function (id) {
-        Array.from(this.chatListGroup.children).forEach(chat => {
-            if (chat.getAttribute('id') === id) {
-                chat.remove();
-            };
-        });
-    }
-}
 
 // main
 const main = function () {
