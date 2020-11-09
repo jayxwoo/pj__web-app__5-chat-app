@@ -16,7 +16,13 @@ const col = 'chats';
 
 // main
 const main = function () {
-    const chatter = new Chatter(col, 'default', 'general');
+    const localUsername = localStorage.getItem('username');
+
+    if (!localUsername) {
+        localUsername = 'anonymous';
+    };
+
+    const chatter = new Chatter(col, localUsername, 'general');
     const chatUI = new ChatUI(chatListGroup, 'default');
 
     // get chats
@@ -55,6 +61,9 @@ const main = function () {
 
         // update username
         chatter.updateUsername(newUsername);
+
+        // store username in local storage
+        localStorage.setItem('username', newUsername);
 
         // reset username form
         usernameForm.reset()
